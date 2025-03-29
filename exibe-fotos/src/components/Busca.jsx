@@ -21,6 +21,7 @@ export default class Busca extends Component {
       event.preventDefault()
       // ao clicar no botão ok, o termno digitado 
       // deve aparecer no console do navegador
+      this.props.onBuscaRealizada(this.state.termoDeBusca)
     }
 
 
@@ -40,7 +41,7 @@ export default class Busca extends Component {
               <Button
                   label="OK"
                   outlined/>
-                  
+
         </div>
       </form>
     )
