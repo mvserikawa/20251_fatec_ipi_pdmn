@@ -27,7 +27,7 @@ export default class Busca extends Component {
 
   render() {
     return (
-      <form>
+      <form onSubmit={this.onFormSubmit}>
         <div
           className='flex flex-column'>
               <IconField iconPosition='left'>
@@ -39,12 +39,16 @@ export default class Busca extends Component {
                       value={this.state.termoDeBusca}/>
               </IconField>
               <Button
+                  type="submit"
                   label="OK"
-                  outlined/>
-
+                  outlined
+              />
         </div>
       </form>
     )
   }
 }
 
+Busca.defaultProps = {
+  dica: 'Buscar fotos...'
+}
