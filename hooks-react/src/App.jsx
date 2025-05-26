@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Accordion from './components/Accordion'
+import Busca from './components/Busca'
 
 const itens = [
   {
@@ -19,13 +20,11 @@ const itens = [
 ]
 
 
-
-
 const App = () => {
+  const expressaoJSX = <Busca />
   return (
     <div>
-      {}
-      <Accordion itens ={itens}/>
+      {expressaoJSX}
     </div>
   )
 }
