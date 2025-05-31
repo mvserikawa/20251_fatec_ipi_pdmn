@@ -3,14 +3,22 @@ import React, { useState, useEffect } from 'react'
 import {IconField} from 'primereact/iconfield';
 import {InputText} from 'primereact/inputtext';
 import {InputIcon} from 'primereact/inputicon';
+import {Button} from 'primereact/button';
 import axios from 'axios';
 import striptags from 'striptags';
 
 
 const Busca = () => {
     const[termoDeBusca, setTermoDeBusca] = useState('Python')
-
+    
     const [resultados, setResultados] = useState([])
+    
+    useEffect(() => {
+        console.log("Causando um efeito colateral qualquer...")
+        return () => {
+            console.log("Limpando coisas...desalocando recursos...por exemplo, destruindo um timer")
+        }
+    })
 
    useEffect (() => {
     const fazerBusca = async () => {
@@ -25,7 +33,18 @@ const Busca = () => {
         })
         setResultados(data.query.search)
     }
-    fazerBusca()
+    if(termoDeBusca && !resultados.length === 0){
+        fazerBusca()
+    }
+    else {
+        const timeoutID = setTimeout(() => {
+            if (termoDeBusca)
+            fazerBusca()
+        }, 500)
+        return () => {
+            clearTimeout(timeoutID)
+        }
+    }
    } , [termoDeBusca])
 
 
@@ -45,9 +64,18 @@ const Busca = () => {
             <div className='border-bottom border-1 border-400 p-2 text-center 
             font-bold'>
                 {resultado.title}
+                <span>
+                <Button
+                icon="pi pi-send"
+                className='ml-3 p-button-rounded p-button-secondary'
+                onClick={() => {
+                    window.open(`https://en.wikipedia.org?curid=${resultado.pageid}`)
+                }}/>
+                </span>
             </div>
             <div className='p-2'>
-                <span dangerouslySetInnerHTML={{__html: resultado.snippet}}></span>
+                {striptags(resultado.snippet)}
+                {/* <span dangerouslySetInnerHTML={{__html: resultado.snippet}}></span> */}
             </div>
         </div>
         ))
